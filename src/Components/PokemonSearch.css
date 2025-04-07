@@ -3,8 +3,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    background-color: #f2b983; 
+    height: 100vh;
+    width: 100vw;
+    background-color: #f8b16f; 
     font-family: Arial, sans-serif;
   }
   
@@ -25,7 +26,7 @@
   }
   
   .pokemon-card {
-    background-color: #fff;
+    background-color: #f5c1c1;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -57,8 +58,19 @@
     margin: 5px 0;
   }
   
+  .pokemon-card.selected{
+    border: 2px solid hsl(264, 44%, 17%);
+    background-color: #ffaaaa;
+    transform: scale(1.05);
+    transition: all 0.4s ease;
+
+  }
+
   .error-message {
     color: red;
     font-size: 1.2rem;
   }
-  
+
+  .start_battle_button{
+    border: none;
+  }
