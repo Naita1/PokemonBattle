@@ -1,6 +1,6 @@
 
 
-.pokemon_search_container {
+.battle_container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -31,7 +31,7 @@
   }
   
   .pokemon_card {
-    background-color: #f5c1c1;
+    /* background-color: #f5c1c1; */
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -91,7 +91,8 @@
   }
 
   .start_battle_button{
-    background-color: #003a7080  ;
+    /* background-color: #003a7080  ; */
+    background-color: #FFCB05;
     color: #fefefe  ;
     border: none;
     border-radius: 10px;
@@ -121,8 +122,10 @@
 
  
   .reset_battle_button{
-    background-color: #003a7080  ;
-    color: #fefefe  ;
+    /* background-color: #003a7080  ;
+    color: #fefefe  ; */
+    background-color: #FFCB05;
+    color: #fefefe ;
     border: none;
     border-radius: 10px;
     font-size: 1.2rem;
@@ -132,10 +135,14 @@
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+    font-family: 'Press Start 2P', cursive;
+    /* border: #FFCB05 solid 2px; */
+
+
   }
 
   .reset_battle_button:hover{
-    background-color: #6ea1df;
+    background-color: #2d7ad9;
     color: #FEFEFE;
     transform: scale(1.05);
   }
@@ -150,7 +157,7 @@
     animation: fadeInUp 1s ease-in-out;
   }
 
-  .player_colum, .oponnent_colum {
+  .player_column, .oponnent_column {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;

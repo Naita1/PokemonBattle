@@ -18,6 +18,31 @@ const PokemonSearch = () => {
     }
   };
 
+  const getTypeColor = (type) => {
+    const colors = {
+      fire: "#f08030",
+      water: "#6890f0",
+      grass: "#78c850",
+      electric: "#f8d030",
+      ice: "#98d8d8",
+      fighting: "#c03028",
+      poison: "#a040a0",
+      ground: "#e0c068",
+      flying: "#a890f0",
+      psychic: "#f85888",
+      bug: "#a8b820",
+      rock: "#b8a038",
+      ghost: "#705898",
+      dark: "#705848",
+      dragon: "#7038f8",
+      steel: "#b8b8d0",
+      fairy: "#ee99ac",
+      normal: "#a8a878",
+    };
+    return colors[type] || "#ccc";
+  };
+  
+
   const togglePokemonSelection = (pokemon) => {
     const isAlreadySelected = pokemonSelected.find((p) => p.id === pokemon.id);
 
@@ -77,7 +102,7 @@ const PokemonSearch = () => {
           resultMessage = `Empate \n Sua pontuação total: ${playerTotalExperience} \n Pontuação total do oponente: ${opponentTotalExperience}`;
         }
         setBattleResult(resultMessage);
-      }, 2000);
+      }, 500);
       setHideUnselected(true);
     } catch {
       console.log("erro");
@@ -98,14 +123,15 @@ const PokemonSearch = () => {
   }
 
   return (
-    <div className="pokemon_search_container">
+    <div className="battle_container">
       {hideUnselected && (
         <div>
           <div className="battle_grid">
             <h2>Seus Pokemons</h2>
-            <div className="player_colum">
+            <div className="player_column">
               {pokemonSelected.map((pokemon) => (
-                <div key={pokemon.id} className={`pokemon_card`}>
+                <div key={pokemon.id} className={`pokemon_card`}   style={{ backgroundColor: getTypeColor(pokemon.types[0]) }}
+>
                   <img
                     src={pokemon.image}
                     alt={pokemon.name}
@@ -140,7 +166,7 @@ const PokemonSearch = () => {
                 </div>
               )}
             </div>
-            <div className="oponnent_colum">
+            <div className="oponnent_column">
               {opponentPokemon.map((pokemon) => (
                 <div key={pokemon.id} className="pokemon_card">
                   <img
