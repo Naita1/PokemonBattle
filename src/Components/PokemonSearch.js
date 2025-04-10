@@ -18,29 +18,29 @@ const PokemonSearch = () => {
     }
   };
 
-  const getTypeColor = (type) => {
-    const colors = {
-      fire: "#f08030",
-      water: "#6890f0",
-      grass: "#78c850",
-      electric: "#f8d030",
-      ice: "#98d8d8",
-      fighting: "#c03028",
-      poison: "#a040a0",
-      ground: "#e0c068",
-      flying: "#a890f0",
-      psychic: "#f85888",
-      bug: "#a8b820",
-      rock: "#b8a038",
-      ghost: "#705898",
-      dark: "#705848",
-      dragon: "#7038f8",
-      steel: "#b8b8d0",
-      fairy: "#ee99ac",
-      normal: "#a8a878",
-    };
-    return colors[type] || "#ccc";
-  };
+  // const getTypeColor = (type) => {
+  //   const colors = {
+  //     fire: "#f08030",
+  //     water: "#6890f0",
+  //     grass: "#78c850",
+  //     electric: "#f8d030",
+  //     ice: "#98d8d8",
+  //     fighting: "#c03028",
+  //     poison: "#a040a0",
+  //     ground: "#e0c068",
+  //     flying: "#a890f0",
+  //     psychic: "#f85888",
+  //     bug: "#a8b820",
+  //     rock: "#b8a038",
+  //     ghost: "#705898",
+  //     dark: "#705848",
+  //     dragon: "#7038f8",
+  //     steel: "#b8b8d0",
+  //     fairy: "#ee99ac",
+  //     normal: "#a8a878",
+  //   };
+  //   return colors[type] || "#ccc";
+  // };
   
 
   const togglePokemonSelection = (pokemon) => {
@@ -130,7 +130,8 @@ const PokemonSearch = () => {
             <h2>Seus Pokemons</h2>
             <div className="player_column">
               {pokemonSelected.map((pokemon) => (
-                <div key={pokemon.id} className={`pokemon_card`}   style={{ backgroundColor: getTypeColor(pokemon.types[0]) }}
+                <div key={pokemon.id} className={`pokemon_card`}   
+                // style={{ backgroundColor: getTypeColor(pokemon.types[0]) }}
 >
                   <img
                     src={pokemon.image}
