@@ -40,6 +40,8 @@ app.get('/api/random-pokemons', async (req, res) => {
         height: pokemon.height / 10,
         weight: pokemon.weight / 10,
         experience: pokemon.base_experience,
+        abilities: pokemon.abilities.map((a) => a.ability.name)
+
 
       };
     });
@@ -101,3 +103,4 @@ app.get('/api/opponent-pokemons', async (req, res) => {
 app.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port}`);
 });
+  

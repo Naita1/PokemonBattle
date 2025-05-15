@@ -3,6 +3,13 @@ import axios from "axios";
 import "./PokemonSearch.css";
 
 const PokemonSearch = () => {
+  const [playerIndex, setPlayerIndex] = useState(0);
+  const [opponentIndex, setOpponentIndex] = useState(0);
+  const [playerHP, setPlayerHP]= useState(100);
+  const [opponentHP, setOpponentHP]= useState(100);
+  const [isBattleActive, setIsBattleActive] = useState(false);
+
+
   const [pokemonData, setPokemonData] = useState([]);
   const [opponentPokemon, setOpponentPokemon] = useState([]);
   const [pokemonSelected, setPokemonSelected] = useState([]);
@@ -74,40 +81,92 @@ const PokemonSearch = () => {
     }
   };
 
-  const startBattle = async () => {
-    try {
-      const opponents = await fetchOpponentPokemon();
-      setOpponentPokemon(opponents);
 
-      setTimeout(() => {
-        const playerTotalExperience = pokemonSelected.reduce(
-          (acc, p) => acc + (p.experience || 0),
-          0
-        );
-        const opponentTotalExperience = opponents.reduce(
-          (acc, p) => acc + (p.experience || 0),
-          0
-        );
+  const opponentAttack = () => {
+    const damage = Math.floor(Math.random() * 30) + 10;
+    const playerRemainingHP = playerHP - damage;
 
-        let resultMessage = "";
+    if(playerRemainingHP <= 0){
+      const nextIndex = playerIndex + 1;
+      if(nextIndex >= playerIndex.length){
+        setBattleResult("Derrota! Seus Pokémon foram derrotados.");
+        setIsBattleActive(false)
+      }
+      else{
+        setOpponentIndex(nextIndex);
+        setPlayerHP(100);
+      }
+    } else{
+      setPlayerHP(playerRemainingHP)
+    }
+  }
+  
+  const handleAttack = (move) => {
+    const damage = Math.floor(Math.random() * 30) + 10;
+    const opponentRemainingHP = opponentHP - damage;
 
-        console.log("Seus", playerTotalExperience);
-        console.log("Oponente", opponentTotalExperience);
+    if(opponentRemainingHP <= 0){
+      const nextIndex = opponentIndex + 1;
+      if(nextIndex >= opponentIndex.length){
+        setBattleResult("Vitória! Você derrotou todos os oponentes!");
+        setIsBattleActive(false)
+      }
+      else{
+        setOpponentIndex(nextIndex);
+        setOpponentHP(100);
+      }
+    } else{
+      setOpponentHP(opponentRemainingHP)
+      opponentAttack()
+    }
+  }
 
-        if (playerTotalExperience > opponentTotalExperience) {
-          resultMessage = `Você venceu \n Sua pontuação total: ${playerTotalExperience} \n Pontuação total do oponente: ${opponentTotalExperience}`;
-        } else if (playerTotalExperience < opponentTotalExperience) {
-          resultMessage = `Você perdeu \n Sua pontuação total: ${playerTotalExperience} \n Pontuação total do oponente: ${opponentTotalExperience}`;
-        } else {
-          resultMessage = `Empate \n Sua pontuação total: ${playerTotalExperience} \n Pontuação total do oponente: ${opponentTotalExperience}`;
-        }
-        setBattleResult(resultMessage);
-      }, 500);
-      setHideUnselected(true);
-    } catch {
-      console.log("erro");
+  const startBattle = () => {
+    if (pokemonSelected.length === 3 && opponentPokemon.length === 3) {
+      setIsBattleActive(true);
+      setPlayerIndex(0);
+      setOpponentIndex(0);
+      setPlayerHP(100);
+      setOpponentHP(100);
+      setBattleResult(null);
     }
   };
+  
+  
+  // const startBattle = async () => {
+  //   try {
+  //     const opponents = await fetchOpponentPokemon();
+  //     setOpponentPokemon(opponents);
+
+  //     setTimeout(() => {
+  //       const playerTotalExperience = pokemonSelected.reduce(
+  //         (acc, p) => acc + (p.experience || 0),
+  //         0
+  //       );
+  //       const opponentTotalExperience = opponents.reduce(
+  //         (acc, p) => acc + (p.experience || 0),
+  //         0
+  //       );
+
+  //       let resultMessage = "";
+
+  //       console.log("Seus", playerTotalExperience);
+  //       console.log("Oponente", opponentTotalExperience);
+
+  //       if (playerTotalExperience > opponentTotalExperience) {
+  //         resultMessage = `Você venceu \n Sua pontuação total: ${playerTotalExperience} \n Pontuação total do oponente: ${opponentTotalExperience}`;
+  //       } else if (playerTotalExperience < opponentTotalExperience) {
+  //         resultMessage = `Você perdeu \n Sua pontuação total: ${playerTotalExperience} \n Pontuação total do oponente: ${opponentTotalExperience}`;
+  //       } else {
+  //         resultMessage = `Empate \n Sua pontuação total: ${playerTotalExperience} \n Pontuação total do oponente: ${opponentTotalExperience}`;
+  //       }
+  //       setBattleResult(resultMessage);
+  //     }, 500);
+  //     setHideUnselected(true);
+  //   } catch {
+  //     console.log("erro");
+  //   }
+  // };
 
   const resetBattle = () => {
     setPokemonSelected([]);
@@ -121,6 +180,8 @@ const PokemonSearch = () => {
     if(exp > 70) return "gold";
     return "red"
   }
+
+  console.log(pokemonData.abilities)
 
   return (
     <div className="battle_container">
@@ -146,6 +207,9 @@ const PokemonSearch = () => {
                   <p className="pokemon_info">Peso: {pokemon.weight}</p>
                   <p className="pokemon_info">
                     Experiencia: {pokemon.experience}
+                  </p>
+                  <p className="pokemon_info">
+                    Habilidades: {pokemon.abilities} 
                   </p>
                   <div className="hp_bar">
                     <div
